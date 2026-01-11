@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIUM Lost & Found - Smart Reporting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        iium: {
+                            navy: '#1B3C59', // Official Navy
+                            gold: '#D4AF37', // Official Gold
+                            teal: '#00A3A8', // Official Teal
+                            red: '#E05D5D',  // Soft Red
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Chip Styling */
+        .chip-input:checked+label {
+            background-color: #1B3C59;
+            color: white;
+            border-color: #1B3C59;
+            box-shadow: 0 4px 6px -1px rgba(27, 60, 89, 0.2);
+        }
+
+        .color-chip:checked+label {
+            ring-width: 2px;
+            ring-color: #1B3C59;
+            ring-offset-width: 2px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-200 min-h-screen flex justify-center items-center font-sans">
+
+    <!-- Phone Frame Container -->
+    <div
+        class="w-full max-w-md bg-gray-50 h-[100dvh] md:h-[850px] md:max-h-[90vh] md:rounded-[2.5rem] md:shadow-2xl md:border-[8px] md:border-gray-900 overflow-hidden relative flex flex-col">
+
+        <!-- Status Bar Fake (Desktop Only) -->
+        <div
+            class="hidden md:flex justify-between items-center px-6 py-2 bg-white text-xs font-semibold text-gray-900 border-b border-gray-100 z-30">
+            <span>9:41</span>
+            <div class="flex space-x-1">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="bg-white shadow-sm px-6 py-4 flex items-center sticky top-0 z-20 flex-shrink-0">
+            <a href="dashboard.html" class="text-gray-400 hover:text-iium-navy mr-4 transition-colors">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h1 class="font-bold text-lg text-iium-navy">Report Found Item</h1>
+            <div class="ml-auto">
+                <button class="text-gray-400 hover:text-iium-navy">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Form Scrollable Area -->
+        <main class="flex-1 overflow-y-auto pb-32">
+
+            <!-- Photo Upload Section -->
+            <div class="p-6 bg-white mb-2 shadow-sm">
+                <div class="flex justify-between items-center mb-3">
+                    <p class="text-sm font-bold text-gray-800">Item Photo <span class="text-red-500">*</span></p>
+                    <span
+                        class="text-xs text-iium-teal font-medium bg-iium-teal/10 px-2 py-1 rounded-full">Required</span>
+                </div>
+
+                <div
+                    class="w-full aspect-square bg-slate-50 rounded-2xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 transition-all relative overflow-hidden group active:scale-[0.99]">
+                    <div class="flex flex-col items-center group-hover:scale-105 transition-transform duration-300">
+                        <div class="bg-white p-5 rounded-full shadow-md mb-3 group-hover:shadow-lg transition-shadow">
+                            <i class="fas fa-camera text-iium-navy text-2xl"></i>
+                        </div>
+                        <p class="text-sm text-center text-gray-500 font-medium">Tap to snap or upload</p>
+                    </div>
+                    <input type="file" class="absolute inset-0 opacity-0 cursor-pointer z-10" accept="image/*">
+                </div>
+                <p class="text-[11px] text-center text-gray-400 mt-2">Clear photos increase claim rates by 40%</p>
+            </div>
+
+            <!-- Smart Inputs Section -->
+            <div class="px-6 py-6 space-y-7">
+
+                <!-- Category Chips -->
+                <div>
+                    <p class="text-sm font-bold text-gray-800 mb-3">What is it?</p>
+                    <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 -mx-6 px-6 scroll-smooth">
+                        <!-- Chip 1 -->
+                        <input type="radio" name="category" id="cat-wallet" class="hidden chip-input">
+                        <label for="cat-wallet"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none flex items-center">
+                            <i class="fas fa-wallet mr-2.5 text-xs opacity-70"></i>Wallet
+                        </label>
+
+                        <!-- Chip 2 -->
+                        <input type="radio" name="category" id="cat-electronics" class="hidden chip-input">
+                        <label for="cat-electronics"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none flex items-center">
+                            <i class="fas fa-mobile-alt mr-2.5 text-xs opacity-70"></i>Electronics
+                        </label>
+
+                        <!-- Chip 3 -->
+                        <input type="radio" name="category" id="cat-keys" class="hidden chip-input">
+                        <label for="cat-keys"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none flex items-center">
+                            <i class="fas fa-key mr-2.5 text-xs opacity-70"></i>Keys
+                        </label>
+
+                        <!-- Chip 4 -->
+                        <input type="radio" name="category" id="cat-card" class="hidden chip-input">
+                        <label for="cat-card"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none flex items-center">
+                            <i class="fas fa-id-card mr-2.5 text-xs opacity-70"></i>Matric Card
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Color Chips -->
+                <div>
+                    <p class="text-sm font-bold text-gray-800 mb-3">Color</p>
+                    <div class="flex gap-4 overflow-x-auto no-scrollbar py-1">
+                        <input type="radio" name="color" id="col-black" class="hidden color-chip">
+                        <label for="col-black"
+                            class="w-12 h-12 rounded-full bg-black border border-gray-200 cursor-pointer shadow-sm flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
+                            title="Black"></label>
+
+                        <input type="radio" name="color" id="col-blue" class="hidden color-chip">
+                        <label for="col-blue"
+                            class="w-12 h-12 rounded-full bg-blue-700 border border-gray-200 cursor-pointer shadow-sm flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
+                            title="Blue"></label>
+
+                        <input type="radio" name="color" id="col-brown" class="hidden color-chip">
+                        <label for="col-brown"
+                            class="w-12 h-12 rounded-full bg-[#8B4513] border border-gray-200 cursor-pointer shadow-sm hover:scale-110 active:scale-95 transition-transform"
+                            title="Brown"></label>
+
+                        <input type="radio" name="color" id="col-navy" class="hidden color-chip">
+                        <label for="col-navy"
+                            class="w-12 h-12 rounded-full bg-iium-navy border border-gray-200 cursor-pointer shadow-sm hover:scale-110 active:scale-95 transition-transform"
+                            title="Navy"></label>
+
+                        <input type="radio" name="color" id="col-white" class="hidden color-chip">
+                        <label for="col-white"
+                            class="w-12 h-12 rounded-full bg-white border border-gray-200 cursor-pointer shadow-sm hover:scale-110 active:scale-95 transition-transform"
+                            title="White"></label>
+                    </div>
+                </div>
+
+                <!-- Location Chips -->
+                <div>
+                    <p class="text-sm font-bold text-gray-800 mb-3">Where was it found?</p>
+                    <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 -mx-6 px-6">
+                        <input type="radio" name="location" id="loc-kict" class="hidden chip-input">
+                        <label for="loc-kict"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none">
+                            KICT
+                        </label>
+
+                        <input type="radio" name="location" id="loc-library" class="hidden chip-input">
+                        <label for="loc-library"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none">
+                            Main Library
+                        </label>
+
+                        <input type="radio" name="location" id="loc-kenms" class="hidden chip-input">
+                        <label for="loc-kenms"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none">
+                            KENMS
+                        </label>
+
+                        <input type="radio" name="location" id="loc-mahallah" class="hidden chip-input">
+                        <label for="loc-mahallah"
+                            class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 cursor-pointer shadow-sm transition-all select-none">
+                            Mahallah
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Details (Optional) -->
+                <div class="pt-2">
+                    <p class="text-sm font-bold text-gray-800 mb-2">Additional Details <span
+                            class="text-gray-400 font-normal text-xs ml-1">(Optional)</span></p>
+                    <textarea
+                        class="w-full bg-white border border-gray-200 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-iium-teal focus:border-transparent outline-none transition-all placeholder-gray-400 shadow-sm"
+                        rows="3" placeholder="Any distinct scratch or mark?"></textarea>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Sticky Footer Button -->
+        <footer class="bg-white/90 backdrop-blur-md border-t border-gray-100 p-6 absolute bottom-0 w-full z-40">
+            <button
+                class="w-full bg-gradient-to-r from-iium-navy to-[#2C5282] text-white font-bold py-4 rounded-xl shadow-lg shadow-iium-navy/30 hover:shadow-xl hover:scale-[1.01] active:scale-[0.98] transition-all flex justify-center items-center group">
+                <span class="text-[15px] tracking-wide">Submit Report</span>
+                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
