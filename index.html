@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIUM Lost & Found - Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        iium: {
+                            navy: '#1B3C59',
+                            gold: '#D4AF37',
+                            teal: '#00A3A8',
+                            red: '#E05D5D',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .chip-input:checked+label {
+            background-color: #1B3C59;
+            color: white;
+            border-color: #1B3C59;
+            box-shadow: 0 4px 6px -1px rgba(27, 60, 89, 0.2);
+        }
+
+        .color-chip:checked+label {
+            ring-width: 2px;
+            ring-color: #1B3C59;
+            ring-offset-width: 2px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-200 min-h-screen flex justify-center items-center font-sans">
+
+    <!-- Phone Frame Container -->
+    <div
+        class="w-full max-w-md bg-white h-[100dvh] md:h-[850px] md:max-h-[90vh] md:rounded-[2.5rem] md:shadow-2xl md:border-[8px] md:border-gray-900 overflow-hidden relative flex flex-col">
+
+        <!-- Status Bar Fake (Desktop Only) -->
+        <div
+            class="hidden md:flex justify-between items-center px-6 py-2 bg-white text-xs font-semibold text-gray-900 border-b border-gray-100 z-50">
+            <span>9:41</span>
+            <div class="flex space-x-1">
+                <i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- ==================== SCREEN 1: LOGIN ==================== -->
+        <div id="screen-login"
+            class="app-screen flex-1 flex flex-col bg-white px-8 pb-8 relative z-40 h-full overflow-y-auto">
+            <div class="flex-1 flex flex-col justify-center items-center">
+                <!-- Logo Placemolder -->
+                <div
+                    class="w-24 h-24 bg-iium-navy rounded-3xl flex items-center justify-center mb-6 shadow-xl shadow-iium-navy/20">
+                    <i class="fas fa-box-open text-white text-4xl"></i>
+                </div>
+
+                <h1 class="text-2xl font-bold text-iium-navy mb-1">Welcome Back</h1>
+                <p class="text-gray-400 text-sm mb-10 text-center">Secure authentication for IIUM Community</p>
+
+                <!-- Inputs -->
+                <div class="w-full space-y-4 mb-8">
+                    <div>
+                        <label class="text-xs font-bold text-gray-700 uppercase tracking-wide ml-1">Matric
+                            Number</label>
+                        <div class="mt-1 relative">
+                            <span class="absolute left-4 top-3.5 text-gray-400"><i class="fas fa-id-card"></i></span>
+                            <input type="text" placeholder="e.g. 211xxxx"
+                                class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-iium-navy outline-none transition-all placeholder-gray-400">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-700 uppercase tracking-wide ml-1">Password</label>
+                        <div class="mt-1 relative">
+                            <span class="absolute left-4 top-3.5 text-gray-400"><i class="fas fa-lock"></i></span>
+                            <input type="password" placeholder="••••••••"
+                                class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-xl py-3 pl-10 pr-4 focus:ring-2 focus:ring-iium-navy outline-none transition-all placeholder-gray-400">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login Button -->
+                <button onclick="navigateTo('screen-dashboard')"
+                    class="w-full bg-iium-navy text-white font-bold py-4 rounded-xl shadow-lg shadow-iium-navy/30 hover:bg-[#2C5282] active:scale-[0.98] transition-all">
+                    Login to i-Ma'luum
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-6">
+                <p class="text-[10px] text-gray-400 font-medium">
+                    <i class="fas fa-shield-alt mr-1 text-iium-teal"></i> Verified Student Access Only
+                </p>
+            </div>
+        </div>
+
+        <!-- ==================== SCREEN 2: DASHBOARD ==================== -->
+        <div id="screen-dashboard"
+            class="app-screen hidden flex-1 flex flex-col bg-gray-50 relative h-full overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center z-10 shrink-0">
+                <div class="flex items-center space-x-3">
+                    <button class="text-iium-navy text-xl"><i class="fas fa-bars"></i></button>
+                    <h1 class="font-bold text-lg text-iium-navy uppercase tracking-wide">IIUM Lost & Found</h1>
+                </div>
+                <div class="relative">
+                    <i class="fas fa-bell text-iium-navy text-xl"></i>
+                    <span
+                        class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-white">3</span>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto pb-6 relative">
+                <!-- Welcome -->
+                <div class="px-6 pt-6 pb-2">
+                    <p class="text-gray-500 text-sm font-medium">Assalamu'alaikum,</p>
+                    <h2 class="text-2xl font-bold text-iium-navy">Brother Faiz</h2>
+                    <p class="text-xs text-gray-400 mt-1">What would you like to do today?</p>
+                </div>
+
+                <!-- Thumb Zone Actions -->
+                <div class="px-6 py-6 grid gap-4 grid-cols-2 h-64 mt-2">
+                    <button onclick="navigateTo('screen-report')"
+                        class="bg-white border-2 border-iium-red/10 rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all flex flex-col justify-center items-center group relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-iium-red/5 to-transparent group-hover:from-iium-red/10 transition-colors">
+                        </div>
+                        <div
+                            class="bg-red-50 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform z-10 shadow-sm">
+                            <i class="fas fa-search text-iium-red text-2xl"></i>
+                        </div>
+                        <span class="text-iium-red font-bold text-lg z-10">I LOST<br>Something</span>
+                    </button>
+
+                    <button
+                        class="bg-white border-2 border-iium-teal/10 rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all flex flex-col justify-center items-center group relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-iium-teal/5 to-transparent group-hover:from-iium-teal/10 transition-colors">
+                        </div>
+                        <div
+                            class="bg-teal-50 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform z-10 shadow-sm">
+                            <i class="fas fa-camera text-iium-teal text-2xl"></i>
+                        </div>
+                        <span class="text-iium-teal font-bold text-lg z-10">I FOUND<br>Something</span>
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div
+                    class="mx-6 bg-gradient-to-r from-iium-navy to-[#2C5282] text-white rounded-xl p-5 flex justify-between items-center shadow-md mb-6 relative overflow-hidden">
+                    <div class="z-10">
+                        <p class="text-[10px] text-gray-300 uppercase font-bold tracking-widest mb-1">Community Impact
+                        </p>
+                        <p class="font-bold text-xl">12 Items Returned</p>
+                    </div>
+                    <div class="bg-white/10 p-3 rounded-lg z-10 backdrop-blur-sm">
+                        <i class="fas fa-handshake text-white text-xl"></i>
+                    </div>
+                </div>
+
+                <!-- Recent Updates -->
+                <div class="px-6">
+                    <h3 class="font-bold text-iium-navy text-lg mb-4">Recent Updates</h3>
+                    <div class="flex space-x-4 overflow-x-auto no-scrollbar pb-6 -mx-6 px-6">
+                        <!-- Card 1 -->
+                        <div
+                            class="min-w-[170px] bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex-shrink-0">
+                            <div class="h-32 bg-gray-200 relative">
+                                <img src="https://images.unsplash.com/photo-1627123424574-181ce5171afc?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                    alt="Wallet" class="w-full h-full object-cover">
+                                <span
+                                    class="absolute top-2 left-2 bg-iium-red/90 text-white text-[10px] font-bold px-2 py-1 rounded-md">LOST</span>
+                            </div>
+                            <div class="p-3">
+                                <p class="font-bold text-gray-800 text-sm truncate">Brown Wallet</p>
+                                <p class="text-xs text-gray-500 mt-1">Library</p>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div
+                            class="min-w-[170px] bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex-shrink-0">
+                            <div class="h-32 bg-gray-200 relative">
+                                <img src="https://images.unsplash.com/photo-1577705998148-6da4f3963bc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+                                    alt="Keys" class="w-full h-full object-cover">
+                                <span
+                                    class="absolute top-2 left-2 bg-iium-teal/90 text-white text-[10px] font-bold px-2 py-1 rounded-md">FOUND</span>
+                            </div>
+                            <div class="p-3">
+                                <p class="font-bold text-gray-800 text-sm truncate">Car Keys</p>
+                                <p class="text-xs text-gray-500 mt-1">Mahallah Ali</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Bottom Nav -->
+            <nav
+                class="bg-white border-t border-gray-100 px-6 py-3 flex justify-between items-center text-gray-400 text-[10px] font-medium shrink-0">
+                <button class="flex flex-col items-center text-iium-navy"><i
+                        class="fas fa-home text-xl mb-1"></i><span>Home</span></button>
+                <button class="flex flex-col items-center hover:text-iium-navy"><i
+                        class="fas fa-compass text-xl mb-1"></i><span>Explore</span></button>
+                <div class="relative -top-6">
+                    <button
+                        class="bg-gradient-to-tr from-iium-gold to-[#F6E05E] text-white p-4 rounded-full shadow-lg border-4 border-gray-50 hover:scale-105 transition-transform"><i
+                            class="fas fa-plus text-xl"></i></button>
+                </div>
+                <button class="flex flex-col items-center hover:text-iium-navy"><i
+                        class="fas fa-comment-dots text-xl mb-1"></i><span>Chats</span></button>
+                <button class="flex flex-col items-center hover:text-iium-navy"><i
+                        class="fas fa-user-circle text-xl mb-1"></i><span>Profile</span></button>
+            </nav>
+        </div>
+
+        <!-- ==================== SCREEN 3: REPORT ==================== -->
+        <div id="screen-report"
+            class="app-screen hidden flex-1 flex flex-col bg-gray-50 relative h-full overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm px-6 py-4 flex items-center shrink-0 z-20">
+                <button onclick="navigateTo('screen-dashboard')"
+                    class="text-gray-400 hover:text-iium-navy mr-4 transition-colors">
+                    <i class="fas fa-arrow-left text-lg"></i>
+                </button>
+                <h1 class="font-bold text-lg text-iium-navy">Report Lost Item</h1>
+            </header>
+
+            <main class="flex-1 overflow-y-auto pb-32">
+                <!-- Photo -->
+                <div class="p-6 bg-white mb-2 shadow-sm">
+                    <div
+                        class="w-full aspect-square bg-slate-50 rounded-2xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer relative">
+                        <div class="bg-white p-5 rounded-full shadow-md mb-3"><i
+                                class="fas fa-camera text-iium-navy text-2xl"></i></div>
+                        <p class="text-sm text-center text-gray-500 font-medium">Tap to upload photo</p>
+                    </div>
+                </div>
+
+                <!-- Inputs -->
+                <div class="px-6 py-6 space-y-7">
+                    <!-- Categories -->
+                    <div>
+                        <p class="text-sm font-bold text-gray-800 mb-3">What is it?</p>
+                        <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 -mx-6 px-6">
+                            <input type="radio" name="cat" id="c1" class="hidden chip-input"><label for="c1"
+                                class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600">Wallet</label>
+                            <input type="radio" name="cat" id="c2" class="hidden chip-input"><label for="c2"
+                                class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600">Electronics</label>
+                            <input type="radio" name="cat" id="c3" class="hidden chip-input"><label for="c3"
+                                class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600">Keys</label>
+                            <input type="radio" name="cat" id="c4" class="hidden chip-input"><label for="c4"
+                                class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600">Card</label>
+                        </div>
+                    </div>
+
+                    <!-- Colors -->
+                    <div>
+                        <p class="text-sm font-bold text-gray-800 mb-3">Color</p>
+                        <div class="flex gap-4 overflow-x-auto no-scrollbar py-1">
+                            <input type="radio" name="col" id="col1" class="hidden color-chip"><label for="col1"
+                                class="w-12 h-12 rounded-full bg-black border border-gray-200"></label>
+                            <input type="radio" name="col" id="col2" class="hidden color-chip"><label for="col2"
+                                class="w-12 h-12 rounded-full bg-blue-700 border border-gray-200"></label>
+                            <input type="radio" name="col" id="col3" class="hidden color-chip"><label for="col3"
+                                class="w-12 h-12 rounded-full bg-[#8B4513] border border-gray-200"></label>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div>
+                        <p class="text-sm font-bold text-gray-800 mb-3">Where was it lost?</p>
+                        <div class="flex overflow-x-auto no-scrollbar gap-3 pb-2 -mx-6 px-6">
+                            <input type="radio" name="loc" id="l1" class="hidden chip-input"><label for="l1"
+                                class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600">KICT</label>
+                            <input type="radio" name="loc" id="l2" class="hidden chip-input"><label for="l2"
+                                class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600">Library</label>
+                            <input type="radio" name="loc" id="l3" class="hidden chip-input"><label for="l3"
+                                class="flex-shrink-0 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600">Mahallah</label>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Sticky Submit -->
+            <footer class="bg-white/90 backdrop-blur-md border-t border-gray-100 p-6 absolute bottom-0 w-full z-40">
+                <button onclick="navigateTo('screen-dashboard')"
+                    class="w-full bg-gradient-to-r from-iium-navy to-[#2C5282] text-white font-bold py-4 rounded-xl shadow-lg shadow-iium-navy/30 hover:shadow-xl active:scale-[0.98] transition-all flex justify-center items-center">
+                    <span>Submit Report</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- Navigation Logic -->
+    <script>
+        function navigateTo(screenId) {
+            // Get all screens
+            const screens = document.querySelectorAll('.app-screen');
+
+            // Hide all screens
+            screens.forEach(screen => {
+                screen.classList.add('hidden');
+            });
+
+            // Show target screen
+            document.getElementById(screenId).classList.remove('hidden');
+
+            // Optional: Scroll to top of new screen
+            const activeScreen = document.getElementById(screenId);
+            const mainContent = activeScreen.querySelector('main');
+            if (mainContent) mainContent.scrollTop = 0;
+        }
+    </script>
+</body>
+
+</html>
